@@ -1,6 +1,8 @@
 import 'package:chat_app_demo/src/features/auth/view/page/auth_page.dart';
 import 'package:chat_app_demo/src/features/chat/view/page/chat_page.dart';
 import 'package:chat_app_demo/src/features/home/view/page/home_page.dart';
+import 'package:chat_app_demo/src/features/profile/view/pages/profile_page.dart';
+import 'package:chat_app_demo/src/features/profile/view/pages/update_profile_page.dart';
 import 'package:chat_app_demo/src/features/splash/view/page/splash_page.dart';
 import 'package:chat_app_demo/src/features/welcome/view/page/welcome_page.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,8 @@ class AppRoutes {
   static const String authPage = "/auth-page";
   static const String homePage = "/home-page";
   static const String chatPage = "/chat-page";
+  static const String profilePage = "/profile-page";
+  static const String updateProfilePage = "/update-profile-page";
 
  static List<GetPage> pageList = [
     GetPage(
@@ -34,6 +38,16 @@ class AppRoutes {
    GetPage(
        name: AppRoutes.chatPage,
        page: () => const ChatPage(),
+       transition:Transition.rightToLeft
+   ),
+   GetPage(
+       name: AppRoutes.profilePage,
+       page: () => const ProfilePage(),
+       transition:Transition.rightToLeft
+   ),
+   GetPage(
+       name: AppRoutes.updateProfilePage,
+       page: () => const UpdateProfilePage(),
        transition:Transition.rightToLeft
    ),
   ];

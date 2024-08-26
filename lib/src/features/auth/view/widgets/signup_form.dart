@@ -12,7 +12,7 @@ class SignUpForm extends StatelessWidget {
     TextEditingController emailController=TextEditingController();
     TextEditingController passwordController=TextEditingController();
 
-    AuthController authController=AuthController();
+    AuthController authController=Get.find<AuthController>();
 
     return  Column(
       children: [
@@ -52,7 +52,11 @@ class SignUpForm extends StatelessWidget {
             KButton(
               btnText: "SIGNUP",
               onTap: (){
-                authController.createUser(email: emailController.text, password: passwordController.text);
+                authController.createUser(
+                    name: nameController.text,
+                    email: emailController.text,
+                    password: passwordController.text
+                );
               },
             ),
           ],

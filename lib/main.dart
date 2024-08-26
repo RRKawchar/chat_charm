@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:chat_app_demo/src/core/di/app_bindings.dart';
 import 'package:chat_app_demo/src/core/routes/app_routes.dart';
 import 'package:chat_app_demo/src/core/theme/app_theme.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
+import 'package:chat_app_demo/src/features/splash/view/page/splash_page.dart';
 import 'package:chat_app_demo/src/features/welcome/view/page/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +36,10 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       theme: lightTheme,
       darkTheme: darkTheme,
+      initialBinding: AppBindings(),
+      initialRoute: AppRoutes.splashPage,
       getPages: AppRoutes.pageList,
-       home:WelcomePage()
+       //home:SplashPage()
        //home:RecordingTest()
     );
   }
