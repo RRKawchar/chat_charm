@@ -18,7 +18,8 @@ Future<void> main() async{
           apiKey: "AIzaSyDsR3-RaYt5ZUGpBgt0ckCYemP_44dYWD8",
           appId: "1:67114285716:android:fa91b977e5167729439281",
           messagingSenderId: "67114285716",
-          projectId: "berber-booking-app"
+          projectId: "berber-booking-app",
+
      )
   ):
   await Firebase.initializeApp();

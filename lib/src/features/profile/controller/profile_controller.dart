@@ -10,9 +10,10 @@ import 'package:get/get.dart';
 class ProfileController extends GetxController{
   final auth=FirebaseAuth.instance;
   final fireStoreDB=FirebaseFirestore.instance;
-  final storage=FirebaseStorage.instance;
-
+  final storage=FirebaseStorage.instanceFor(bucket: "gs://berber-booking-app.appspot.com");
   Rx<UserModel> userInfoList=UserModel().obs;
+  RxBool isLoading=false.obs;
+
 
   @override
   void onInit() {
@@ -32,37 +33,59 @@ class ProfileController extends GetxController{
     }
   }
 
-  Future<void> updateUserInfo({
+  Future<void> updateProfile({
     required String imageUrl,
     required String name,
     required String about,
-    required String phone,
-  })async{
+    required String number,
+  }) async {
+    isLoading.value = true;
+    try {
 
+      String? imageLink = userInfoList.value.profilePic;
+      if (imageUrl.isNotEmpty) {
+        imageLink = await uploadImage(imagePath: imageUrl);
+      }
 
+      final updatedUser = UserModel(
+        id: auth.currentUser!.uid,
+        email: auth.currentUser!.email,
+        name: name,
+        about: about,
+        profilePic: imageLink,
+        phoneNumber: number,
+      );
+
+      await fireStoreDB.collection("users").doc(auth.currentUser!.uid).set(
+        updatedUser.toJson(),
+      );
+       await getUserInfo();
+
+    } catch (ex) {
+      kPrint("Error updating profile: $ex");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
 
-  Future<String> uploadFileToFirebase({required String imagePath})async{
-    final path="files/$imagePath";
-    final file=File(imagePath);
-    if(imagePath != ""){
-      try{
-       final ref= storage.ref().child(path).putFile(file);
-       final uploadTask=await ref.whenComplete((){});
-       final downloadImageUrl=await uploadTask.ref.getDownloadURL();
-       kPrint("Image downloadUrl $downloadImageUrl");
+  Future<String> uploadImage({required String imagePath}) async {
+    try {
+      final path = "files/${imagePath.split('/').last}";
+      final file = File(imagePath);
 
-       return downloadImageUrl;
-      }catch(e){
-        kPrint(e);
-        return e.toString();
-      }
-      
+      final ref = storage.ref().child(path).putFile(file);
+      final uploadTask = await ref.whenComplete(() {});
+      final downloadImageUrl = await uploadTask.ref.getDownloadURL();
+
+      kPrint(downloadImageUrl);
+      return downloadImageUrl;
+    } catch (ex) {
+      kPrint("Error uploading file: $ex");
+      return "";
     }
-    return "";
-    
-  } 
+  }
+
 
 
 

@@ -5,7 +5,7 @@ import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_list.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/home_tapbar.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
-import 'package:chat_app_demo/src/features/profile/view/pages/profile_page_main.dart';
+import 'package:chat_app_demo/src/features/profile/view/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -47,8 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           IconButton(
             onPressed: () {
-              //Get.toNamed(AppRoutes.profilePage);
-              Get.to(ProfilePageMain());
+              Get.toNamed(AppRoutes.profilePage);
             },
             icon: const Icon(
               Icons.more_vert,
@@ -62,7 +61,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(AppRoutes.contactPage);
+        },
         child: Icon(
           Icons.add,
           color: Theme.of(context).colorScheme.onBackground,
