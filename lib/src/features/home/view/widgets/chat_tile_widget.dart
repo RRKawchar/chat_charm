@@ -1,5 +1,7 @@
+
 import 'package:chat_app_demo/src/core/utils/assets_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChatTileWidget extends StatelessWidget {
   final String imageUrl;
@@ -29,26 +31,35 @@ class ChatTileWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.asset(
+                child:Image.network(
                   imageUrl,
                   width: 60,
-                ),
+                  height: 60,
+                  fit: BoxFit.fill,
+                )
               ),
               const SizedBox(width: 15),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  SizedBox(
+                    width: context.width/2,
+                    child: Text(
+                     name,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     lastChat,
                     style: Theme.of(context).textTheme.labelLarge,
+
                   ),
                 ],
               ),
+
+
             ],
           ),
           Text(

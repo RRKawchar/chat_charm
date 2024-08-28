@@ -7,4 +7,6 @@ class AssetsImage{
 
   static const String boyAvatarImage="assets/images/boy_avatar_pic.jpg";
   static const String girlAvatarImage="assets/images/girl_avatar_pic.png";
+
+
 }

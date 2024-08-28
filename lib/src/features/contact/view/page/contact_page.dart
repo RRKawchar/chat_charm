@@ -1,6 +1,8 @@
 import 'package:chat_app_demo/src/core/helpers/helper_method.dart';
-import 'package:chat_app_demo/src/core/routes/app_routes.dart';
-import 'package:chat_app_demo/src/core/utils/assets_image.dart';
+import 'package:chat_app_demo/src/core/utils/constant.dart';
+import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
+import 'package:chat_app_demo/src/features/chat/view/page/chat_page.dart';
+import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
 import 'package:chat_app_demo/src/features/contact/view/widgets/contact_search.dart';
 import 'package:chat_app_demo/src/features/contact/view/widgets/new_contact_list_tile.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_tile_widget.dart';
@@ -12,7 +14,10 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ContactController contactController=Get.find<ContactController>();
+    ChatController chatController=Get.find<ChatController>();
     RxBool isSearchEnable=false.obs;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Select Contact"),
@@ -75,83 +80,28 @@ class ContactPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            InkWell(
-              onTap: (){
-                Get.toNamed(AppRoutes.chatPage);
-              },
-              child: const ChatTileWidget(
-                imageUrl: AssetsImage.girlAvatarImage,
-                name: "khsjkkjdjj",
-                lastChat: "How are you",
-                lastTime: "09:55 PM",
-              ),
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.boyAvatarImage,
-              name: "RRK",
-              lastChat: "I am fine . and u?",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.girlAvatarImage,
-              name: "KAS",
-              lastChat: "How are you",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.boyAvatarImage,
-              name: "khsjkkjdjj",
-              lastChat: "Where are u from?",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.girlAvatarImage,
-              name: "khsjkkjdjj",
-              lastChat: "How are you",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.boyAvatarImage,
-              name: "RRK",
-              lastChat: "I am fine . and u?",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.girlAvatarImage,
-              name: "KAS",
-              lastChat: "How are you",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.boyAvatarImage,
-              name: "khsjkkjdjj",
-              lastChat: "Where are u from?",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.girlAvatarImage,
-              name: "khsjkkjdjj",
-              lastChat: "How are you",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.boyAvatarImage,
-              name: "RRK",
-              lastChat: "I am fine . and u?",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.girlAvatarImage,
-              name: "KAS",
-              lastChat: "How are you",
-              lastTime: "09:55 PM",
-            ),
-            const ChatTileWidget(
-              imageUrl: AssetsImage.boyAvatarImage,
-              name: "khsjkkjdjj",
-              lastChat: "Where are u from?",
-              lastTime: "09:55 PM",
-            ),
+             Obx(() =>  Column(
+             children:
+             contactController.userList.map((element) =>
+                 InkWell(
+                   onTap: (){
+                   Get.to(ChatPage(userModel: element));
+
+                 String roomId=chatController.getRoomId(element.id!);
+                 kPrint("Checking roomId : $roomId");
+                   },
+                   child:  ChatTileWidget(
+                     imageUrl:element.profilePic==null|| element.profilePic==""?
+                     AppConstants.defaultProfilePic.toString():element.profilePic.toString(),
+                     name: element.name??"User Name",
+                     lastChat: element.about??"",
+                     lastTime: "",
+                   ),
+                 ),
+             ).toList(),
+           ),
+           )
+
           ],
         ),
       ),

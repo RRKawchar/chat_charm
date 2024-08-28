@@ -22,14 +22,13 @@ class ProfileController extends GetxController{
   }
 
   Future<void> getUserInfo()async{
-    kPrint("I am checking User List: ${userInfoList.value}");
     try{
       await fireStoreDB.collection("users").doc(auth.currentUser!.uid).get().then((value){
          userInfoList.value=UserModel.fromJson(value.data()!);
       });
-      kPrint("I am checking User List3: ${userInfoList.value.email}");
     }catch(e){
       kPrint(e);
+    }finally{
     }
   }
 

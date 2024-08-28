@@ -13,7 +13,7 @@ class AppRoutes {
   static const String welcomePage = "/welcome-page";
   static const String authPage = "/auth-page";
   static const String homePage = "/home-page";
-  static const String chatPage = "/chat-page";
+ // static const String chatPage = "/chat-page";
   static const String profilePage="/profile-page";
   static const String contactPage="/contact-page";
 
@@ -36,11 +36,11 @@ class AppRoutes {
        page: () => const HomePage(),
        transition:Transition.rightToLeft
    ),
-   GetPage(
-       name: AppRoutes.chatPage,
-       page: () => const ChatPage(),
-       transition:Transition.rightToLeft
-   ),
+   // GetPage(
+   //     name: AppRoutes.chatPage,
+   //     page: () => const ChatPage(),
+   //     transition:Transition.rightToLeft
+   // ),
    GetPage(
        name: AppRoutes.profilePage,
        page: () => const ProfilePage(),

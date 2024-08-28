@@ -32,7 +32,7 @@ class ProfilePage extends StatelessWidget {
         actions: [
           IconButton(onPressed: (){
             authController.logoutUser();
-          }, icon: Icon(Icons.logout))
+          }, icon: const Icon(Icons.logout))
         ],
       ),
       body: Padding(
@@ -54,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Obx(
-                              () => isEdit.value
+                              () =>isEdit.value
                                   ? InkWell(
                                       onTap: () async {
                                         imagePath.value =
@@ -91,12 +91,8 @@ class ProfilePage extends StatelessWidget {
                                               child: const Icon(Icons.add),
                                             ),
                                     )
-                                  : profileController.userInfoList.value
-                                                  .profilePic ==
-                                              null ||
-                                          profileController.userInfoList.value
-                                                  .profilePic ==
-                                              ""
+                                  :profileController.userInfoList.value.profilePic ==null ||
+                                          profileController.userInfoList.value.profilePic == ""
                                       ? CircleAvatar(
                                           radius: 80,
                                           backgroundColor: Theme.of(context)
@@ -106,7 +102,8 @@ class ProfilePage extends StatelessWidget {
                                             Icons.image,
                                             size: 60,
                                           ))
-                                      : ClipRRect(
+                                      :
+                                     ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(100),
                                           child: Image.network(
