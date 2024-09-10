@@ -6,6 +6,7 @@ import 'package:chat_app_demo/src/features/contact/controller/contact_controller
 import 'package:chat_app_demo/src/features/contact/view/widgets/contact_search.dart';
 import 'package:chat_app_demo/src/features/contact/view/widgets/new_contact_list_tile.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_tile_widget.dart';
+import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ContactController contactController=Get.find<ContactController>();
     ChatController chatController=Get.find<ChatController>();
+    ProfileController profileController=Get.find<ProfileController>();
     RxBool isSearchEnable=false.obs;
 
     return Scaffold(
@@ -95,7 +97,7 @@ class ContactPage extends StatelessWidget {
                      AppConstants.defaultProfilePic.toString():element.profilePic.toString(),
                      name: element.name??"User Name",
                      lastChat: element.about??"",
-                     lastTime: "",
+                     lastTime: element.email==profileController.currentUserList.value.email?"You":"",
                    ),
                  ),
              ).toList(),

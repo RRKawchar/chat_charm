@@ -11,7 +11,7 @@ class ProfileController extends GetxController{
   final auth=FirebaseAuth.instance;
   final fireStoreDB=FirebaseFirestore.instance;
   final storage=FirebaseStorage.instanceFor(bucket: "gs://berber-booking-app.appspot.com");
-  Rx<UserModel> userInfoList=UserModel().obs;
+  Rx<UserModel> currentUserList=UserModel().obs;
   RxBool isLoading=false.obs;
 
 
@@ -24,7 +24,7 @@ class ProfileController extends GetxController{
   Future<void> getUserInfo()async{
     try{
       await fireStoreDB.collection("users").doc(auth.currentUser!.uid).get().then((value){
-         userInfoList.value=UserModel.fromJson(value.data()!);
+         currentUserList.value=UserModel.fromJson(value.data()!);
       });
     }catch(e){
       kPrint(e);
@@ -41,7 +41,7 @@ class ProfileController extends GetxController{
     isLoading.value = true;
     try {
 
-      String? imageLink = userInfoList.value.profilePic;
+      String? imageLink = currentUserList.value.profilePic;
       if (imageUrl.isNotEmpty) {
         imageLink = await uploadImage(imagePath: imageUrl);
       }

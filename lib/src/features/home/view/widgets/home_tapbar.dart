@@ -1,3 +1,4 @@
+import 'package:chat_app_demo/src/core/utils/assets_image.dart';
 import 'package:flutter/material.dart';
 
 homeTabBar({required TabController tabController,required BuildContext context}) {
@@ -7,6 +8,7 @@ homeTabBar({required TabController tabController,required BuildContext context})
       controller: tabController,
       unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
       labelStyle: Theme.of(context).textTheme.bodyLarge,
+
       tabs:  [
       Tab(
         text: "Chats",

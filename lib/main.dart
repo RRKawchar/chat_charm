@@ -5,6 +5,7 @@ import 'package:chat_app_demo/src/core/routes/app_routes.dart';
 import 'package:chat_app_demo/src/core/theme/app_theme.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/splash/view/page/splash_page.dart';
+import 'package:chat_app_demo/src/features/tab_test_screen.dart';
 import 'package:chat_app_demo/src/features/welcome/view/page/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       initialBinding: AppBindings(),
       initialRoute: AppRoutes.splashPage,
       getPages: AppRoutes.pageList,
-       //home:SplashPage()
+      // home:TabTestScreen()
        //home:RecordingTest()
     );
   }

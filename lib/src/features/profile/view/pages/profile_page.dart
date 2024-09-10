@@ -17,13 +17,13 @@ class ProfilePage extends StatelessWidget {
     AuthController authController=Get.find<AuthController>();
 
     TextEditingController nameController =
-        TextEditingController(text: profileController.userInfoList.value.name);
+        TextEditingController(text: profileController.currentUserList.value.name);
     TextEditingController emailController =
-        TextEditingController(text: profileController.userInfoList.value.email);
+        TextEditingController(text: profileController.currentUserList.value.email);
     TextEditingController phoneController = TextEditingController(
-        text: profileController.userInfoList.value.phoneNumber);
+        text: profileController.currentUserList.value.phoneNumber);
     TextEditingController aboutController =
-        TextEditingController(text: profileController.userInfoList.value.about);
+        TextEditingController(text: profileController.currentUserList.value.about);
     RxBool isEdit = false.obs;
     RxString imagePath = "".obs;
     return Scaffold(
@@ -91,8 +91,8 @@ class ProfilePage extends StatelessWidget {
                                               child: const Icon(Icons.add),
                                             ),
                                     )
-                                  :profileController.userInfoList.value.profilePic ==null ||
-                                          profileController.userInfoList.value.profilePic == ""
+                                  :profileController.currentUserList.value.profilePic ==null ||
+                                          profileController.currentUserList.value.profilePic == ""
                                       ? CircleAvatar(
                                           radius: 80,
                                           backgroundColor: Theme.of(context)
@@ -108,7 +108,7 @@ class ProfilePage extends StatelessWidget {
                                               BorderRadius.circular(100),
                                           child: Image.network(
                                             profileController
-                                                .userInfoList.value.profilePic
+                                                .currentUserList.value.profilePic
                                                 .toString(),
                                             width: 180,
                                             height: 180,

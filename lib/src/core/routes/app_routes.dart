@@ -16,6 +16,7 @@ class AppRoutes {
  // static const String chatPage = "/chat-page";
   static const String profilePage="/profile-page";
   static const String contactPage="/contact-page";
+  static const String updateProfilePage="/update-profile-page";
 
  static List<GetPage> pageList = [
     GetPage(
@@ -49,6 +50,11 @@ class AppRoutes {
    GetPage(
        name: AppRoutes.contactPage,
        page: () => const ContactPage(),
+       transition:Transition.rightToLeft
+   ),
+   GetPage(
+       name: AppRoutes.updateProfilePage,
+       page: () => const UpdateProfilePage(),
        transition:Transition.rightToLeft
    ),
   ];

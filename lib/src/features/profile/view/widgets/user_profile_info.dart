@@ -5,11 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserProfileInfo extends StatelessWidget {
-  const UserProfileInfo({super.key});
+  final String profileImage;
+  final String userName;
+  final String userEmail;
+  const UserProfileInfo({
+    super.key,
+    required this.profileImage,
+    required this.userName,
+    required this.userEmail,
+  });
 
   @override
   Widget build(BuildContext context) {
-    ProfileController profileController=Get.find<ProfileController>();
+   final  ProfileController profileController = Get.find<ProfileController>();
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -23,20 +31,22 @@ class UserProfileInfo extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    AssetsImage.boyAvatarImage,
-                    width: 100,
+                  child: Image.network(
+                    profileImage,
+                    width: 150,
+                    height: 150,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(height: 10),
-                Obx(() => Text(
-                  profileController.userInfoList.value.name??"user name",
+                Text(
+                  userName,
                   style: Theme.of(context).textTheme.bodyLarge,
-                ),),
-               Obx(() =>  Text(
-                 profileController.userInfoList.value.email??"user email",
-                 style: Theme.of(context).textTheme.labelLarge,
-               ),),
+                ),
+                Text(
+                  userEmail,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
