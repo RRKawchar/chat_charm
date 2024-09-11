@@ -6,6 +6,7 @@ import 'package:chat_app_demo/src/features/profile/controller/image_picker_contr
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -60,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                                       onTap: () async {
                                         imagePath.value =
                                             await imagePickerController
-                                                .pickedImage();
+                                                .pickedImage(ImageSource.gallery);
                                       },
                                       child: imagePath.value != ""
                                           ? Container(

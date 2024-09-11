@@ -1,10 +1,12 @@
 import 'package:chat_app_demo/src/core/helpers/helper_method.dart';
 import 'package:chat_app_demo/src/core/utils/colors.dart';
 import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
+import 'package:chat_app_demo/src/features/chat/view/widgets/image_picker_bottom_sheet.dart';
 import 'package:chat_app_demo/src/features/profile/controller/image_picker_controller.dart';
 import 'package:chat_app_demo/src/features/profile/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatTypeMessage extends StatelessWidget {
   final UserModel userModel;
@@ -47,9 +49,12 @@ class ChatTypeMessage extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: InkWell(
-                    onTap: () async {
-                      chatController.selectedImagePath.value =
-                          await imagePickerController.pickedImage();
+                    onTap: () {
+                      imagePickerBottomSheet(
+                        context: context,
+                        chatController: chatController,
+                        imagePickerController: imagePickerController,
+                      );
                     },
                     child: Icon(
                       Icons.image_outlined,
