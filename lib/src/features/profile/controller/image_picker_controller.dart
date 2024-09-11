@@ -13,8 +13,6 @@ class ImagePickerController extends GetxController{
     }else{
       return "";
     }
-
-
   }
 
 

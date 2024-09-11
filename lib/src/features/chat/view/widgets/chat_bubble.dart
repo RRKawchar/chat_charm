@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 
@@ -32,30 +32,39 @@ class ChatBubble extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primaryContainer,
-              borderRadius: isComing?const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(10),
-              ):const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(0),
-              ),
+              borderRadius: isComing
+                  ? const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(0),
+                      bottomRight: Radius.circular(10),
+                    )
+                  : const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(0),
+                    ),
             ),
-            child: imageUrl == "" ?
-            Text(message) :
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(imageUrl)),
-                const SizedBox(height: 10),
-                Text(message)
-              ],
-            ),
+            child: imageUrl == ""
+                ? Text(message)
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
+                      message == "" ? Container() : const SizedBox(height: 10),
+                      message == "" ? Container() : Text(message)
+                    ],
+                  ),
           ),
           const SizedBox(height: 8),
           Row(

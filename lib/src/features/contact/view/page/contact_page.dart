@@ -45,10 +45,10 @@ class ContactPage extends StatelessWidget {
           children: [
             Obx(() =>
             isSearchEnable.value?
-            ContactSearch():
+            const ContactSearch():
             Container(),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             NewContactListTile(
               btnText: "New Contact",
               icon: Icons.person_add,
@@ -56,7 +56,7 @@ class ContactPage extends StatelessWidget {
 
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             NewContactListTile(
               btnText: "New Group",
               icon: Icons.group_add,
@@ -64,7 +64,7 @@ class ContactPage extends StatelessWidget {
 
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             NewContactListTile(
               btnText: "New community",
               icon: Icons.groups_outlined,
@@ -72,7 +72,7 @@ class ContactPage extends StatelessWidget {
 
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Text(
@@ -81,7 +81,7 @@ class ContactPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
              Obx(() =>  Column(
              children:
              contactController.userList.map((element) =>

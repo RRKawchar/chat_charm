@@ -2,6 +2,8 @@ import 'package:chat_app_demo/src/core/routes/app_routes.dart';
 import 'package:chat_app_demo/src/core/utils/assets_image.dart';
 import 'package:chat_app_demo/src/core/utils/colors.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
+import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
+import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_list.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/home_tapbar.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
@@ -24,7 +26,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 3, vsync: this);
     ProfileController profileController=Get.find<ProfileController>();
-
+    ContactController contactController=Get.find<ContactController>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -40,7 +42,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              contactController.getChatRoomList();
+            },
             icon: const Icon(
               Icons.search,
             ),

@@ -29,7 +29,13 @@ class ChatRoomModel {
     id = json['id'];
     sender = UserModel.fromJson(json['sender']);
     receiver = UserModel.fromJson(json['receiver']);
-    messages = json['messages']??[];
+    if (json['messages'] != null) {
+      messages = (json['messages'] as List<dynamic>)
+          .map((e) => ChatModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } else {
+      messages = [];
+    }
     unReadMessageNo = json['unReadMessageNo'];
     lastMessage = json['lastMessage'];
     lastMessageTimeStamp = json['lastMessageTimeStamp'];

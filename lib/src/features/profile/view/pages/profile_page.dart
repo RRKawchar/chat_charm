@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app_demo/src/core/widgets/k_button.dart';
 import 'package:chat_app_demo/src/features/auth/controller/auth_controller.dart';
 import 'package:chat_app_demo/src/features/profile/controller/image_picker_controller.dart';
@@ -104,16 +105,30 @@ class ProfilePage extends StatelessWidget {
                                           ))
                                       :
                                      ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Image.network(
-                                            profileController
-                                                .currentUserList.value.profilePic
-                                                .toString(),
+                                          borderRadius:BorderRadius.circular(100),
+                                          child: CachedNetworkImage(
+                                            imageUrl: profileController.currentUserList.value.profilePic.toString(),
                                             width: 180,
                                             height: 180,
-                                            fit: BoxFit.fill,
-                                          )),
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => const CircularProgressIndicator(),
+                                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                                          ),
+
+
+                                          // Image.network(
+                                          //   profileController
+                                          //       .currentUserList.value.profilePic
+                                          //       .toString(),
+                                          //   width: 180,
+                                          //   height: 180,
+                                          //   fit: BoxFit.fill,
+                                          // ),
+
+
+
+
+                                     ),
                             ),
                           ],
                         ),

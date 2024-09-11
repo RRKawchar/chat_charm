@@ -1,4 +1,4 @@
-import 'package:chat_app_demo/src/core/utils/assets_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app_demo/src/core/utils/colors.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +31,15 @@ class UserProfileInfo extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    profileImage,
+                  child: CachedNetworkImage(
+                    imageUrl: profileImage,
                     width: 150,
                     height: 150,
                     fit: BoxFit.cover,
+                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
+
                 ),
                 const SizedBox(height: 10),
                 Text(

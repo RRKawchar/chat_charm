@@ -6,6 +6,7 @@ import 'package:chat_app_demo/src/features/profile/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatController extends GetxController{
@@ -14,10 +15,10 @@ class ChatController extends GetxController{
   final auth=FirebaseAuth.instance;
   RxBool isLoading=false.obs;
   var uuid = const Uuid();
+  RxString selectedImagePath="".obs;
 
 
   String getRoomId(String targetUserId){
-
     String currentUserId=auth.currentUser!.uid;
     if(currentUserId[0].codeUnitAt(0)>targetUserId[0].codeUnitAt(0)){
       return  currentUserId+targetUserId;
@@ -27,60 +28,93 @@ class ChatController extends GetxController{
   }
 
 
-  Future<void> sendMessage(String targetUserId,String message,UserModel targetUser)async{
-
-    String roomId=getRoomId(targetUserId);
-    String chatId=uuid.v6();
-    var newChat=ChatModel(
-        id: chatId,
-        message: message,
-        senderName: profileController.currentUserList.value.name.toString(),
-        senderId: auth.currentUser!.uid,
-        receiverId:targetUserId,
-        timestamp: DateTime.now().toString(),
-        readStatus: "",
-        imageUrl: "",
-        videoUrl: "",
-        audioUrl: "",
-        documentUrl: "",
-        reactions: [],
-        replies: [],
-    );
-
-    var roomDetails=ChatRoomModel(
-      id: roomId,
-      lastMessage: message,
-      lastMessageTimeStamp: DateTime.now().toString(),
-      sender: profileController.currentUserList.value,
-      receiver:targetUser,
-      messages: [],
-      timestamp: DateTime.now().toString(),
-      unReadMessageNo: 0,
-    );
-
-    try{
-
-      isLoading.value=true;
-
-      await fireStore.collection("chats").
-      doc(roomId).set(
-        roomDetails.toJson(),
-      );
-
-      await fireStore.collection("chats").
-      doc(roomId).
-      collection("messages").
-      doc(chatId).
-      set(newChat.toJson(),
-      );
-
-    }catch(e){
-      kPrint(e.toString());
-    }finally{
-      isLoading.value=false;
+  UserModel getSender(UserModel currentUser, UserModel targetUser){
+    String currentUserId=currentUser.id!;
+    String targetUserId=targetUser.id!;
+    if(currentUserId[0].codeUnitAt(0)> targetUserId[0].codeUnitAt(0)){
+      return currentUser;
+    }else{
+      return targetUser;
     }
-
   }
+
+  UserModel getReceiver(UserModel currentUser,UserModel targetUser){
+    String currentUserId=currentUser.id!;
+    String targetUserId=targetUser.id!;
+    if(currentUserId[0].codeUnitAt(0)>targetUserId[0].codeUnitAt(0)){
+      return targetUser;
+    }else{
+      return currentUser;
+    }
+  }
+
+
+
+   Future<void> sendMessage(String targetUserId,String message,UserModel targetUser)async{
+     try{
+       isLoading.value=true;
+
+       String roomId=getRoomId(targetUserId);
+       String chatId=uuid.v6();
+       DateTime timeStamp =DateTime.now();
+       String formattedDateTime =DateFormat("hh:mm a").format(timeStamp);
+
+       UserModel sender=getSender(profileController.currentUserList.value, targetUser);
+       UserModel receiver=getReceiver(profileController.currentUserList.value, targetUser);
+        RxString imageUrl="".obs;
+         if(selectedImagePath.value.isNotEmpty){
+           imageUrl.value=await profileController.uploadImage(imagePath: selectedImagePath.value);
+         }
+
+       var newChat=ChatModel(
+         id: chatId,
+         message: message,
+         senderName: profileController.currentUserList.value.name.toString(),
+         senderId: auth.currentUser!.uid,
+         receiverId:targetUserId,
+         timestamp: DateTime.now().toString(),
+         readStatus: "",
+         imageUrl: imageUrl.value,
+         videoUrl: "",
+         audioUrl: "",
+         documentUrl: "",
+         reactions: [],
+         replies: [],
+       );
+
+       var roomDetails=ChatRoomModel(
+         id: roomId,
+         lastMessage: message,
+         lastMessageTimeStamp: formattedDateTime,
+         sender: sender,
+         receiver:receiver,
+         messages: [],
+         timestamp: DateTime.now().toString(),
+         unReadMessageNo: 0,
+       );
+
+
+
+       await fireStore.collection("chats").
+       doc(roomId).
+       collection("messages").
+       doc(chatId).
+       set(newChat.toJson(),
+       );
+
+      selectedImagePath.value="";
+       await fireStore.collection("chats").
+       doc(roomId).set(
+         roomDetails.toJson(),
+       );
+
+     }catch(e){
+       kPrint(e.toString());
+     }finally{
+       isLoading.value=false;
+     }
+
+   }
 
 
 
