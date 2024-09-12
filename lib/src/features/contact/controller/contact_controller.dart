@@ -34,14 +34,45 @@ class ContactController extends GetxController {
   }
 
   Future<void> getChatRoomList() async {
-    List<ChatRoomModel> tempRoomList=[];
-    await fireStore.collection('chats').orderBy("timestamp", descending: true)
-        .get().then((value) {
-      tempRoomList =value.docs.map((e) => ChatRoomModel.fromJson(e.data())).toList();
+    List<ChatRoomModel> tempRoomList = [];
+    await fireStore
+        .collection('chats')
+        .orderBy("timestamp", descending: true)
+        .get()
+        .then((value) {
+      tempRoomList =
+          value.docs.map((e) => ChatRoomModel.fromJson(e.data())).toList();
     });
 
     chatRoomList.value = tempRoomList
         .where((element) => element.id!.contains(auth.currentUser!.uid))
         .toList();
+  }
+
+  Future<void> saveContact(UserModel userModel) async {
+    try {
+      await fireStore
+          .collection("users")
+          .doc(auth.currentUser!.uid)
+          .collection("contacts")
+          .doc(userModel.id)
+          .set(
+            userModel.toJson(),
+          );
+    } catch (e) {
+      kPrint("Error while save contact $e");
+      throw "Error while save contact $e";
+    }
+  }
+
+  Stream<List<UserModel>> getContact() {
+    return fireStore
+        .collection("users")
+        .doc(auth.currentUser!.uid)
+        .collection("contacts")
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => UserModel.fromJson(doc.data()))
+            .toList());
   }
 }

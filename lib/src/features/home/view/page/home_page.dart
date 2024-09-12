@@ -4,6 +4,7 @@ import 'package:chat_app_demo/src/core/utils/colors.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
 import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
+import 'package:chat_app_demo/src/features/groups/view/page/group_page.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_list.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/home_tapbar.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
@@ -79,13 +80,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           controller: tabController,
           children: [
             const ChatList(),
-            ListView(
-              children: const [
-                ListTile(
-                  title: Text("Name dd"),
-                )
-              ],
-            ),
+                GroupPage(),
             ListView(
               children: const [
                 ListTile(

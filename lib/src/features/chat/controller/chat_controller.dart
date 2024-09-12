@@ -1,6 +1,7 @@
 import 'package:chat_app_demo/src/core/helpers/helper_method.dart';
 import 'package:chat_app_demo/src/features/chat/model/chat_model.dart';
 import 'package:chat_app_demo/src/features/chat/model/chat_room_model.dart';
+import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
 import 'package:chat_app_demo/src/features/profile/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +12,7 @@ import 'package:uuid/uuid.dart';
 
 class ChatController extends GetxController{
    ProfileController profileController=Get.find<ProfileController>();
+   ContactController contactController=Get.find<ContactController>();
   final fireStore=FirebaseFirestore.instance;
   final auth=FirebaseAuth.instance;
   RxBool isLoading=false.obs;
@@ -108,6 +110,7 @@ class ChatController extends GetxController{
          roomDetails.toJson(),
        );
 
+       await contactController.saveContact(targetUser);
      }catch(e){
        kPrint(e.toString());
      }finally{

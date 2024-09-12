@@ -5,6 +5,7 @@ import 'package:chat_app_demo/src/features/chat/view/page/chat_page.dart';
 import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
 import 'package:chat_app_demo/src/features/contact/view/widgets/contact_search.dart';
 import 'package:chat_app_demo/src/features/contact/view/widgets/new_contact_list_tile.dart';
+import 'package:chat_app_demo/src/features/groups/view/page/new_group.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_tile_widget.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class ContactPage extends StatelessWidget {
               btnText: "New Group",
               icon: Icons.group_add,
               onTap: (){
-
+                Get.to(NewGroup());
               },
             ),
             const SizedBox(height: 10),
