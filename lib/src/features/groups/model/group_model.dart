@@ -34,9 +34,9 @@ class GroupModel {
     profileUrl = json['profileUrl'];
 
     if (json['members'] != null) {
-      members = (json['members'] as List<dynamic>)
-          .map((e) => UserModel.fromJson(e as Map<String, dynamic>))
-          .toList();
+      members = List<UserModel>.from(
+        json["members"].map((membersJson)=>UserModel.fromJson(membersJson))
+      );
     } else {
       members = [];
     }
