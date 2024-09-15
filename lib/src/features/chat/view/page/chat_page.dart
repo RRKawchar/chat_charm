@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
+import 'package:chat_app_demo/src/features/call/controller/call_controller.dart';
 import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
 import 'package:chat_app_demo/src/features/chat/model/chat_model.dart';
 import 'package:chat_app_demo/src/features/chat/view/widgets/chat_bubble.dart';
@@ -21,6 +22,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatController chatController = Get.find<ChatController>();
     ProfileController profileController = Get.find<ProfileController>();
+    CallController callController = Get.find<CallController>();
     return Scaffold(
       appBar: AppBar(
         leading: Row(
@@ -69,17 +71,37 @@ class ChatPage extends StatelessWidget {
                     userModel.name.toString(),
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  Text(
-                    "Offline",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  StreamBuilder(
+                      stream: chatController.getStatus(userModel.id!),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text(".......");
+                        } else {
+                          return Text(
+                            snapshot.data!.status ?? "",
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: snapshot.data!.status == "Online"
+                                    ? Colors.green
+                                    : Colors.grey),
+                          );
+                        }
+                      })
                 ],
               ),
             ],
           ),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.call)),
+          IconButton(
+              onPressed: () {
+                callController.callAction(
+                  receiver: userModel,
+                  caller: profileController.currentUserList.value,
+                );
+              },
+              icon: const Icon(Icons.call)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
         ],
       ),
@@ -158,7 +180,8 @@ class ChatPage extends StatelessWidget {
                                   right: 0,
                                   child: IconButton(
                                     onPressed: () {
-                                      chatController.selectedImagePath.value ="";
+                                      chatController.selectedImagePath.value =
+                                          "";
                                     },
                                     icon: const Icon(
                                       Icons.close,

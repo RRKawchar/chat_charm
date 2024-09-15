@@ -131,4 +131,11 @@ class ChatController extends GetxController{
             ChatModel.fromJson(doc.data())).toList());
   }
 
+   Stream<UserModel> getStatus(String uid){
+     return fireStore.collection("users").doc(uid).snapshots().map((event){
+       return UserModel.fromJson(event.data()!);
+     });
+   }
+
+
 }

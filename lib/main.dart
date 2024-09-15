@@ -4,6 +4,7 @@ import 'package:chat_app_demo/src/core/di/app_bindings.dart';
 import 'package:chat_app_demo/src/core/routes/app_routes.dart';
 import 'package:chat_app_demo/src/core/theme/app_theme.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
+import 'package:chat_app_demo/src/features/call/controller/call_controller.dart';
 import 'package:chat_app_demo/src/features/splash/view/page/splash_page.dart';
 import 'package:chat_app_demo/src/features/tab_test_screen.dart';
 import 'package:chat_app_demo/src/features/welcome/view/page/welcome_page.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CallController callController=Get.put(CallController());
     return GetMaterialApp(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,

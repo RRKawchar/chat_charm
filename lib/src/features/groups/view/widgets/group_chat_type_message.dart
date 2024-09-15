@@ -2,6 +2,7 @@ import 'package:chat_app_demo/src/core/helpers/helper_method.dart';
 import 'package:chat_app_demo/src/core/utils/colors.dart';
 import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
 import 'package:chat_app_demo/src/features/chat/view/widgets/image_picker_bottom_sheet.dart';
+import 'package:chat_app_demo/src/features/groups/controller/group_controller.dart';
 import 'package:chat_app_demo/src/features/groups/model/group_model.dart';
 import 'package:chat_app_demo/src/features/profile/controller/image_picker_controller.dart';
 import 'package:chat_app_demo/src/features/profile/model/user_model.dart';
@@ -15,7 +16,8 @@ class GroupChatTypeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChatController chatController = Get.find<ChatController>();
+    GroupController groupController = Get.find<GroupController>();
+
     TextEditingController messageController = TextEditingController();
     RxString message = "".obs;
     ImagePickerController imagePickerController =
@@ -46,14 +48,14 @@ class GroupChatTypeMessage extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Obx(() => chatController.selectedImagePath.value == ""
+          Obx(() => groupController.selectedImagePath.value == ""
               ? Padding(
             padding: const EdgeInsets.all(4.0),
             child: InkWell(
               onTap: () {
                 imagePickerBottomSheet(
                   context: context,
-                  chatController: chatController,
+                  imagePath: groupController.selectedImagePath,
                   imagePickerController: imagePickerController,
                 );
               },
@@ -67,20 +69,21 @@ class GroupChatTypeMessage extends StatelessWidget {
               : const SizedBox()),
           const SizedBox(width: 10),
           Obx(() => message.value != "" ||
-              chatController.selectedImagePath.value != ""
+              groupController.selectedImagePath.value != ""
               ? InkWell(
             onTap: () {
-              // if (messageController.text.isNotEmpty ||
-              //     chatController.selectedImagePath.value.isNotEmpty) {
-              //   chatController.sendMessage(
-              //       userModel.id!, messageController.text, userModel);
-              //   messageController.clear();
-              //   message.value = "";
-              // }
+              groupController.sendGroupMessage(
+                  message: message.value,
+                  groupId: groupModel.id!,
+                  imagePath: ""
+              );
+
+              messageController.clear();
+              message.value = "";
             },
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: chatController.isLoading.value
+              child: groupController.isLoading.value
                   ? const Center(
                 child: CircularProgressIndicator(),
               )

@@ -52,7 +52,7 @@ class ChatTypeMessage extends StatelessWidget {
                     onTap: () {
                       imagePickerBottomSheet(
                         context: context,
-                        chatController: chatController,
+                        imagePath: chatController.selectedImagePath,
                         imagePickerController: imagePickerController,
                       );
                     },

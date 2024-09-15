@@ -1,6 +1,6 @@
 import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/groups/controller/group_controller.dart';
-import 'package:chat_app_demo/src/features/groups/view/page/group_chat_page.dart';
+import 'package:chat_app_demo/src/features/groups/view/pages/group_chat_page.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

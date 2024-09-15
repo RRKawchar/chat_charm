@@ -2,14 +2,13 @@ import 'package:chat_app_demo/src/core/routes/app_routes.dart';
 import 'package:chat_app_demo/src/core/utils/assets_image.dart';
 import 'package:chat_app_demo/src/core/utils/colors.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
-import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
 import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
 import 'package:chat_app_demo/src/features/groups/controller/group_controller.dart';
-import 'package:chat_app_demo/src/features/groups/view/page/home_group_page.dart';
+import 'package:chat_app_demo/src/features/groups/view/pages/home_group_page.dart';
+import 'package:chat_app_demo/src/features/home/controller/status_controller.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_list.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/home_tapbar.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
-import 'package:chat_app_demo/src/features/profile/view/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -30,6 +29,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ProfileController profileController=Get.find<ProfileController>();
     ContactController contactController=Get.find<ContactController>();
     GroupController groupController = Get.find<GroupController>();
+    StatusController statusController =Get.find<StatusController>();
     return Scaffold(
       appBar: AppBar(
         title: Text(

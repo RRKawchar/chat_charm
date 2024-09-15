@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 void imagePickerBottomSheet({
   required BuildContext context,
-  required ChatController chatController,
+  required RxString imagePath,
   required ImagePickerController imagePickerController,
 }) {
   Get.bottomSheet(
@@ -23,7 +23,7 @@ void imagePickerBottomSheet({
         children: [
           InkWell(
             onTap: () async {
-              chatController.selectedImagePath.value =
+              imagePath.value =
                   await imagePickerController.pickedImage(ImageSource.camera);
               Get.back();
             },
@@ -41,7 +41,7 @@ void imagePickerBottomSheet({
           ),
           InkWell(
             onTap: () async {
-              chatController.selectedImagePath.value =
+              imagePath.value =
                   await imagePickerController.pickedImage(ImageSource.gallery);
               Get.back();
             },

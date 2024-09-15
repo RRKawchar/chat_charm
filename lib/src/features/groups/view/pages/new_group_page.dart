@@ -1,7 +1,7 @@
 import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/contact/controller/contact_controller.dart';
 import 'package:chat_app_demo/src/features/groups/controller/group_controller.dart';
-import 'package:chat_app_demo/src/features/groups/view/page/group_create_page.dart';
+import 'package:chat_app_demo/src/features/groups/view/pages/group_create_page.dart';
 import 'package:chat_app_demo/src/features/groups/view/widgets/select_members_list.dart';
 import 'package:chat_app_demo/src/features/home/view/widgets/chat_tile_widget.dart';
 import 'package:chat_app_demo/src/features/profile/model/user_model.dart';
