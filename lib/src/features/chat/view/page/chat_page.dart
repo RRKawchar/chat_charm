@@ -1,8 +1,9 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/call/controller/call_controller.dart';
+import 'package:chat_app_demo/src/features/call/view/page/audio_call_page.dart';
+import 'package:chat_app_demo/src/features/call/view/page/video_call_page.dart';
 import 'package:chat_app_demo/src/features/chat/controller/chat_controller.dart';
 import 'package:chat_app_demo/src/features/chat/model/chat_model.dart';
 import 'package:chat_app_demo/src/features/chat/view/widgets/chat_bubble.dart';
@@ -25,21 +26,24 @@ class ChatPage extends StatelessWidget {
     CallController callController = Get.find<CallController>();
     return Scaffold(
       appBar: AppBar(
-        leading: Row(
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_back_ios_new),
-            ),
-          ],
+        leadingWidth: 30,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+          ),
         ),
         title: InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           onTap: () {
-            Get.to(UserProfilePage(
-              userModel: userModel,
-            ));
+            Get.to(
+              UserProfilePage(
+                userModel: userModel,
+              ),
+            );
           },
           child: Row(
             children: [
@@ -55,54 +59,72 @@ class ChatPage extends StatelessWidget {
                       const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-
-                // Image.network(
-                //   userModel.profilePic.toString(),
-                //   height: 40,
-                //   width: 40,
-                //   fit: BoxFit.cover,
-                // ),
               ),
               const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    userModel.name.toString(),
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  StreamBuilder(
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userModel.name.toString(),
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    StreamBuilder(
                       stream: chatController.getStatus(userModel.id!),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Text(".......");
+                          return const Text(".......");
                         } else {
                           return Text(
                             snapshot.data!.status ?? "",
                             style: TextStyle(
-                                fontSize: 12,
-                                color: snapshot.data!.status == "Online"
-                                    ? Colors.green
-                                    : Colors.grey),
+                              fontSize: 12,
+                              color: snapshot.data!.status == "Online"
+                                  ? Colors.green
+                                  : Colors.grey,
+                            ),
                           );
                         }
-                      })
-                ],
+                      },
+                    )
+                  ],
+                ),
               ),
             ],
           ),
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                callController.callAction(
-                  receiver: userModel,
-                  caller: profileController.currentUserList.value,
-                );
-              },
-              icon: const Icon(Icons.call)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
+            onPressed: () {
+              Get.to(
+                AudioCallPage(
+                  targetUser: userModel,
+                ),
+              );
+              callController.callAction(
+                receiver: userModel,
+                caller: profileController.currentUserList.value,
+                type: "audio",
+              );
+            },
+            icon: const Icon(Icons.call),
+          ),
+          IconButton(
+            onPressed: () {
+              Get.to(
+                VideoCallPage(
+                  targetUser: userModel,
+                ),
+              );
+              callController.callAction(
+                receiver: userModel,
+                caller: profileController.currentUserList.value,
+                type: "video",
+              );
+            },
+            icon: const Icon(Icons.video_call),
+          ),
         ],
       ),
       body: Padding(
@@ -133,22 +155,23 @@ class ChatPage extends StatelessWidget {
                         );
                       } else {
                         return ListView.builder(
-                            reverse: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              DateTime timeStamp = DateTime.parse(
-                                  snapshot.data![index].timestamp);
-                              String formattedDateTime =
-                                  DateFormat("hh:mm a").format(timeStamp);
-                              return ChatBubble(
-                                message: snapshot.data![index].message,
-                                imageUrl: snapshot.data![index].imageUrl ?? "",
-                                isComing: snapshot.data![index].receiverId ==
-                                    profileController.currentUserList.value.id,
-                                status: "read",
-                                time: formattedDateTime,
-                              );
-                            });
+                          reverse: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            DateTime timeStamp =
+                                DateTime.parse(snapshot.data![index].timestamp);
+                            String formattedDateTime =
+                                DateFormat("hh:mm a").format(timeStamp);
+                            return ChatBubble(
+                              message: snapshot.data![index].message,
+                              imageUrl: snapshot.data![index].imageUrl ?? "",
+                              isComing: snapshot.data![index].receiverId ==
+                                  profileController.currentUserList.value.id,
+                              status: "read",
+                              time: formattedDateTime,
+                            );
+                          },
+                        );
                       }
                     },
                   ),

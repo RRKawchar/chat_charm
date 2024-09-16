@@ -1,4 +1,3 @@
-import 'package:chat_app_demo/src/core/routes/app_routes.dart';
 import 'package:chat_app_demo/src/core/utils/constant.dart';
 import 'package:chat_app_demo/src/features/auth/controller/auth_controller.dart';
 import 'package:chat_app_demo/src/features/profile/controller/profile_controller.dart';
@@ -17,29 +16,18 @@ class UserProfilePage extends StatelessWidget {
     final ProfileController profileController = Get.find<ProfileController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Get.toNamed(AppRoutes.updateProfilePage);
-              },
-              icon: Icon(Icons.edit))
-        ],
+        title: const Text("User Profile"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             UserProfileInfo(
-              profileImage:userModel.profilePic ?? AppConstants.defaultProfilePic,
-              userName:userModel.name??"User Name",
-              userEmail:userModel.email??"User Email" ,
+              profileImage:
+                  userModel.profilePic ?? AppConstants.defaultProfilePic,
+              userName: userModel.name ?? "User Name",
+              userEmail: userModel.email ?? "User Email",
             ),
-            Spacer(),
-            ElevatedButton(
-                onPressed: (){
-              authController.logoutUser();
-            }, child: Text("Logout"))
           ],
         ),
       ),

@@ -14,7 +14,10 @@ import 'package:intl/intl.dart';
 
 class GroupChatPage extends StatelessWidget {
   final GroupModel groupModel;
-  const GroupChatPage({super.key, required this.groupModel});
+  const GroupChatPage({
+    super.key,
+    required this.groupModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +25,22 @@ class GroupChatPage extends StatelessWidget {
     GroupController groupController = Get.find<GroupController>();
     return Scaffold(
       appBar: AppBar(
-        leading: Row(
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_back_ios_new),
-            ),
-          ],
+        leadingWidth: 30,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+          ),
         ),
         title: InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           onTap: () {
-            Get.to(GroupProfileInfo(groupModel: groupModel,));
+            Get.to(GroupProfileInfo(
+              groupModel: groupModel,
+            ));
           },
           child: Row(
             children: [
@@ -75,7 +81,7 @@ class GroupChatPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding:  EdgeInsets.only(bottom: 8, left: 10, right: 10, top: 10),
+        padding: EdgeInsets.only(bottom: 8, left: 10, right: 10, top: 10),
         child: Column(
           children: [
             Expanded(

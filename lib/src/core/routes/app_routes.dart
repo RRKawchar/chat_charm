@@ -2,7 +2,7 @@ import 'package:chat_app_demo/src/features/auth/view/page/auth_page.dart';
 import 'package:chat_app_demo/src/features/chat/view/page/chat_page.dart';
 import 'package:chat_app_demo/src/features/contact/view/page/contact_page.dart';
 import 'package:chat_app_demo/src/features/home/view/page/home_page.dart';
-import 'package:chat_app_demo/src/features/profile/view/pages/profile_page.dart';
+import 'package:chat_app_demo/src/features/profile/view/pages/my_profile_page.dart';
 import 'package:chat_app_demo/src/features/profile/view/pages/update_profile_page.dart';
 import 'package:chat_app_demo/src/features/splash/view/page/splash_page.dart';
 import 'package:chat_app_demo/src/features/welcome/view/page/welcome_page.dart';
@@ -44,7 +44,7 @@ class AppRoutes {
    // ),
    GetPage(
        name: AppRoutes.profilePage,
-       page: () => const ProfilePage(),
+       page: () => const MyProfilePage(),
        transition:Transition.rightToLeft
    ),
    GetPage(
