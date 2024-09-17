@@ -1,16 +1,30 @@
-# chat_app_demo
+# ChatCharm App
 
-A new Flutter project.
+Flutter Chat App || Android & iOS
+###### Developed by: 
+      Riyazur Rohman Kawchar
 
-## Getting Started
+## App Icon :
+![playstore](https://github.com/user-attachments/assets/9aae364f-12d2-48a4-b791-11cf5083a1fa)
 
-This project is a starting point for a Flutter application.
+## Features Banner :
+![file](https://github.com/user-attachments/assets/eeb6b769-75bd-4acf-afc9-51ac98763633)
 
-A few resources to get you started if this is your first Flutter project:
+Resources :
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Flutter](https://docs.flutter.dev/)
+- [Firebase](https://firebase.google.com/)
+- [Getx](https://pub.dev/packages/get)
+- [ZegoCloud](https://www.zegocloud.com/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Features :
+- Login & SignUp
+- One to One Chat
+- One to One Audio Call
+- One to One Video Call
+- Create New Group
+- Group Messaging
+
+About The App :
+- "This chat app offers a seamless communication experience with features like Login & SignUp, Profile editing, One-to-One Chat, Audio & Video Calls, Group Creation, and Group Messaging, providing users with both personal and group interaction options."
+
